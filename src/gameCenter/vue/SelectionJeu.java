@@ -1,8 +1,10 @@
-package gameCenter.view;
+package gameCenter.vue;
 
 import javax.swing.*;
 
-public class GameSelection extends JPanel {
+import java.awt.*;
+
+public class SelectionJeu extends JPanel {
 
     /**
      *

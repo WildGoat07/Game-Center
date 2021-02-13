@@ -1,9 +1,9 @@
-package gameCenter.view;
+package gameCenter.vue;
 
 import javax.swing.*;
 
-import gameCenter.model.*;
-import gameCenter.viewmodel.*;
+import gameCenter.controlleur.*;
+import gameCenter.modele.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
      */
     private static final long serialVersionUID = -4428487152788448811L;
 
-    private JPanel connectionPanel;
+    private JPanel PanelConnexion;
 
     public MainWindow() {
         super();
@@ -26,29 +26,29 @@ public class MainWindow extends JFrame {
         setSize(300, 150);
         setLocationRelativeTo(null);
         setTitle("Game Center");
-        connectionPanel = new JPanel();
-        connectionPanel.setLayout(new BoxLayout(connectionPanel, BoxLayout.Y_AXIS));
+        PanelConnexion = new JPanel();
+        PanelConnexion.setLayout(new BoxLayout(PanelConnexion, BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
-        add(connectionPanel, BorderLayout.CENTER);
-        var ipField = new JTextField("localhost", 15);
-        ipField.setMaximumSize(Utilities.getMaxWidth(20));
-        ipField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        var label = new JLabel("Adresse du server :");
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        connectionPanel.add(label);
-        connectionPanel.add(Box.createVerticalStrut(15));
-        connectionPanel.add(ipField);
-        connectionPanel.add(Box.createVerticalStrut(15));
-        var connect = new JButton("Se connecter");
-        connect.setAlignmentX(Component.CENTER_ALIGNMENT);
-        connect.setMaximumSize(Utilities.getMaxWidth(100));
-        connect.setPreferredSize(Utilities.getMaxWidth(30));
-        connectionPanel.add(connect);
-        connectionPanel.add(Box.createVerticalGlue());
+        add(PanelConnexion, BorderLayout.CENTER);
+        var champIP = new JTextField("localhost", 15);
+        champIP.setMaximumSize(Utilites.LargeurMax(20));
+        champIP.setAlignmentX(Component.CENTER_ALIGNMENT);
+        var titre = new JLabel("Adresse du server :");
+        titre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        PanelConnexion.add(titre);
+        PanelConnexion.add(Box.createVerticalStrut(15));
+        PanelConnexion.add(champIP);
+        PanelConnexion.add(Box.createVerticalStrut(15));
+        var boutonConnexion = new JButton("Se connecter");
+        boutonConnexion.setAlignmentX(Component.CENTER_ALIGNMENT);
+        boutonConnexion.setMaximumSize(Utilites.LargeurMax(100));
+        boutonConnexion.setPreferredSize(Utilites.LargeurMax(30));
+        PanelConnexion.add(boutonConnexion);
+        PanelConnexion.add(Box.createVerticalGlue());
         addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
-                ipField.selectAll();
+                champIP.selectAll();
             }
 
             @Override
@@ -81,12 +81,12 @@ public class MainWindow extends JFrame {
             }
 
         });
-        connect.addActionListener((e) -> {
-            connect.setEnabled(false);
-            ipField.setEnabled(false);
-            Client.RunAsynchronously(() -> {
+        boutonConnexion.addActionListener((e) -> {
+            boutonConnexion.setEnabled(false);
+            champIP.setEnabled(false);
+            Client.asynchrone(() -> {
                 try {
-                    Client.socket = new Socket(ipField.getText(), Constants.PORT);
+                    Client.socket = new Socket(champIP.getText(), Constantes.PORT);
                 } catch (UnknownHostException exc) {
                     return exc;
                 } catch (IOException exc) {
@@ -102,10 +102,10 @@ public class MainWindow extends JFrame {
                         JOptionPane.showMessageDialog(instance, "Impossible de se connecter : " + exc.getMessage(),
                                 "Connexion impossible", JOptionPane.ERROR_MESSAGE);
                     }
-                    connect.setEnabled(true);
-                    ipField.setEnabled(true);
+                    boutonConnexion.setEnabled(true);
+                    champIP.setEnabled(true);
                 } else {
-                    instance.remove(connectionPanel);
+                    instance.remove(PanelConnexion);
                     instance.repaint();
                 }
             });
