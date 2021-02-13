@@ -1,6 +1,5 @@
 package gameCenter.controlleur;
 
-import java.io.*;
 import java.net.*;
 import java.util.function.*;
 
@@ -11,7 +10,7 @@ import gameCenter.vue.MainWindow;
 public class Client {
     public static Socket socket;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new MainWindow().setVisible(true);
     }
 
