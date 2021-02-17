@@ -13,7 +13,7 @@ public abstract class Jeu extends JComponent {
      *
      */
     private static final long serialVersionUID = 1L;
-    private static final int MILLISECONDES = 1000 / 30;
+    protected static final int MILLISECONDES = 1000 / 30;
     private Timer chrono;
 
     public Jeu(Window fenetre) {

@@ -17,27 +17,27 @@ public class Transformable {
     }
 
     public Vecteur getEchelle() {
-        return echelle;
+        return new Vecteur(echelle);
     }
 
     public void setEchelle(Vecteur echelle) {
-        this.echelle = echelle;
+        this.echelle = new Vecteur(echelle);
     }
 
     public Vecteur getOrigine() {
-        return origine;
+        return new Vecteur(origine);
     }
 
     public void setOrigine(Vecteur origine) {
-        this.origine = origine;
+        this.origine = new Vecteur(origine);
     }
 
     public Vecteur getPosition() {
-        return position;
+        return new Vecteur(position);
     }
 
     public void setPosition(Vecteur position) {
-        this.position = position;
+        this.position = new Vecteur(position);
     }
 
     public void deplacerPosition(Vecteur depl) {
