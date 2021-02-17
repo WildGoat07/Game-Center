@@ -16,30 +16,20 @@ public abstract class Jeu extends JComponent {
     private static final int MILLISECONDES = 1000 / 30;
     private Timer chrono;
 
-    protected Object mutex;
-
     public Jeu(Window fenetre) {
         setMaximumSize(Utilites.tailleMax());
-        mutex = new Object();
         chrono = new Timer(MILLISECONDES, (e) -> {
-            synchronized (mutex) {
-                miseAJour(Duration.ofMillis(MILLISECONDES));
-                Client.asynchrone(() -> {
-                    synchronized (mutex) {
-                        fenetre.repaint();
-                    }
-                });
-            }
+            // fenetre.revalidate();
+            fenetre.repaint();
         });
         chrono.start();
+
     }
 
-    protected abstract void dessiner(Graphics2D g);
-
-    protected abstract void miseAJour(Duration delta);
+    protected abstract void dessiner(Graphics2D g, Duration delta);
 
     @Override
     protected void paintComponent(Graphics g) {
-        dessiner((Graphics2D) g);
+        dessiner((Graphics2D) g, Duration.ofMillis(MILLISECONDES));
     }
 }

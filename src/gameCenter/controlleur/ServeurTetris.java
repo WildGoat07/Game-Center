@@ -2,6 +2,7 @@ package gameCenter.controlleur;
 
 import java.net.Socket;
 import java.time.LocalTime;
+import java.util.*;
 
 import gameCenter.modele.Constantes;
 
@@ -12,10 +13,12 @@ import java.io.ObjectOutputStream;
 public class ServeurTetris {
     private Socket client;
     private int score;
-    Color[][] plateau;
+    private Color[][] plateau;
+    private Random generateur;
 
     public ServeurTetris(Socket client) {
         this.client = client;
+        generateur = new Random();
     }
 
     public void demarrer() {
@@ -23,7 +26,7 @@ public class ServeurTetris {
         plateau = new Color[Constantes.TETRIS_LARGEUR][Constantes.TETRIS_HAUTEUR];
         for (int i = 0; i < Constantes.TETRIS_LARGEUR; ++i)
             for (int j = 0; j < Constantes.TETRIS_HAUTEUR; ++j)
-                plateau[i][j] = null;
+                plateau[i][j] = new Color(generateur.nextInt(256), generateur.nextInt(256), generateur.nextInt(256));
         ObjectOutputStream serialiseur;
         try {
             serialiseur = new ObjectOutputStream(client.getOutputStream());
