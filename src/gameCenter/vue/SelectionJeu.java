@@ -42,7 +42,7 @@ public class SelectionJeu extends JPanel {
 
         tetris.addActionListener((e) -> Client.asynchrone(() -> {
             try {
-                Client.socket.getOutputStream().write(Constantes.TETRIS);
+                Client.socket.getOutputStream().write(Constantes.CHOIX_TETRIS);
             } catch (IOException exc) {
                 return exc;
             }
@@ -62,7 +62,7 @@ public class SelectionJeu extends JPanel {
         }));
         demineur.addActionListener((e) -> Client.asynchrone(() -> {
             try {
-                Client.socket.getOutputStream().write(Constantes.DEMINEUR);
+                Client.socket.getOutputStream().write(Constantes.CHOIX_DEMINEUR);
             } catch (IOException exc) {
                 return exc;
             }
@@ -79,7 +79,7 @@ public class SelectionJeu extends JPanel {
         }));
         pong.addActionListener((e) -> Client.asynchrone(() -> {
             try {
-                Client.socket.getOutputStream().write(Constantes.PONG);
+                Client.socket.getOutputStream().write(Constantes.CHOIX_PONG);
             } catch (IOException exc) {
                 return exc;
             }

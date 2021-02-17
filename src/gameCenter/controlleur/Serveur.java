@@ -23,15 +23,29 @@ public class Serveur {
                         + "] " + client.getInetAddress().getCanonicalHostName() + " s'est connecté");
         try {
             var choixJeu = client.getInputStream().read();
-            System.out.println(choixJeu);
+            switch (choixJeu) {
+                case Constantes.CHOIX_TETRIS: {
+                    new ServeurTetris(client).demarrer();
+                }
+                    break;
+                case Constantes.CHOIX_DEMINEUR: {
+
+                }
+                    break;
+                case Constantes.CHOIX_PONG: {
+
+                }
+                    break;
+            }
         } catch (IOException e) {
             System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
-                    + LocalTime.now().getSecond() + "] " + "Une erreur est survenue : " + e.getMessage()
-                    + ", déconnexion du client.");
-            try {
-                client.close();
-            } catch (IOException e2) {
-            }
+                    + LocalTime.now().getSecond() + "] " + "Une erreur est survenue : " + e.getMessage());
+        }
+        System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
+                + LocalTime.now().getSecond() + "] déconnexion du client.");
+        try {
+            client.close();
+        } catch (IOException e2) {
         }
     }
 }
