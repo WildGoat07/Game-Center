@@ -3,6 +3,7 @@ package gameCenter.vue.tetris;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.time.Duration;
 
@@ -20,7 +21,7 @@ public class Tetris extends Jeu {
      */
     private static final long serialVersionUID = 3718214623734367119L;
 
-    private static final int TAILLE_BLOC = 16;
+    public static final int TAILLE_BLOC = 16;
 
     private Bloc[][] plateau;
     private int score;
@@ -28,6 +29,8 @@ public class Tetris extends Jeu {
     private ObjectInputStream serialiseur;
     private Thread sync;
     private Object mutex;
+    private KeyEventDispatcher evenementTouche;
+    private Forme formeActuelle;
 
     public Tetris(Window fenetre) {
         super(fenetre);
@@ -37,7 +40,10 @@ public class Tetris extends Jeu {
         setPreferredSize(getMinimumSize());
         score = 0;
         fond = new gameCenter.controlleur.dessin.Rectangle();
-        fond.setCouleur(new Color(0, 0, 20));
+        fond.setCouleur(new Color(20, 20, 60));
+        fond.setTaille(new Vecteur(Constantes.TETRIS_LARGEUR * TAILLE_BLOC, Constantes.TETRIS_HAUTEUR * TAILLE_BLOC));
+        formeActuelle = new Forme(Forme.S_AUTISTE);
+        formeActuelle.setPosition(new Vecteur(50, 50));
         try {
             serialiseur = new ObjectInputStream(Client.socket.getInputStream());
         } catch (IOException e) {
@@ -71,17 +77,32 @@ public class Tetris extends Jeu {
                 }
             }
         });
-        sync.start();
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .addKeyEventDispatcher(evenementTouche = new KeyEventDispatcher() {
+
+                    @Override
+                    public boolean dispatchKeyEvent(KeyEvent e) {
+                        if (e.getID() == KeyEvent.KEY_PRESSED) {
+                            if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+                                formeActuelle.orienter(formeActuelle.orientation() + 1);
+                        }
+                        return false;
+                    }
+                });
+        // sync.start();
     }
 
     @Override
     protected void dessiner(Graphics2D g, Duration delta) {
         fond.dessiner(g);
         synchronized (mutex) {
-            for (int i = 0; i < Constantes.TETRIS_LARGEUR; ++i)
-                for (int j = 0; j < Constantes.TETRIS_HAUTEUR; ++j)
-                    if (plateau[i][j] != null)
-                        plateau[i][j].dessiner(g);
+
+            // for (int i = 0; i < Constantes.TETRIS_LARGEUR; ++i)
+            // for (int j = 0; j < Constantes.TETRIS_HAUTEUR; ++j)
+            // if (plateau[i][j] != null)
+            // plateau[i][j].dessiner(g);
+
+            formeActuelle.dessiner(g);
         }
     }
 }
