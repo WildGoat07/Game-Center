@@ -36,6 +36,10 @@ public class Serveur {
 
                 }
                     break;
+                case Constantes.CHOIX_TICTACTOE: {
+
+                    }
+                        break;
             }
         } catch (IOException e) {
             System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
