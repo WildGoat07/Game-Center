@@ -21,13 +21,13 @@ public class Bloc extends Transformable implements Dessinable {
             var distanceVert = Math.abs(hsb[0] - 1 / 3f);
             var distanceBleu = Math.abs(hsb[0] - 2 / 3f);
             if (distanceRouge <= distanceVert && distanceRouge <= distanceBleu)// rouge
-                sombre = Color.getHSBColor(hsb[0] > .5f ? (1 - hsb[0]) * .2f + hsb[0] : hsb[0] * .8f,
+                sombre = Color.getHSBColor(hsb[0] > .5f ? (1 - hsb[0]) * .3f + hsb[0] : hsb[0] * .7f,
                         (1 - hsb[1]) * .2f + hsb[1], hsb[2] * .9f);
             else if (distanceVert < distanceRouge && distanceVert < distanceBleu)// vert
 
-                sombre = Color.getHSBColor(hsb[0] + (1 / 3f - hsb[0]) * .2f, (1 - hsb[1]) * .2f + hsb[1], hsb[2] * .9f);
+                sombre = Color.getHSBColor(hsb[0] + (1 / 3f - hsb[0]) * .3f, (1 - hsb[1]) * .2f + hsb[1], hsb[2] * .9f);
             else // bleu
-                sombre = Color.getHSBColor(hsb[0] + (2 / 3f - hsb[0]) * .2f, (1 - hsb[1]) * .2f + hsb[1], hsb[2] * .9f);
+                sombre = Color.getHSBColor(hsb[0] + (2 / 3f - hsb[0]) * .3f, (1 - hsb[1]) * .2f + hsb[1], hsb[2] * .9f);
         } else {
             clair = Color.getHSBColor(hsb[0], 0, (1 - hsb[2]) * .2f + hsb[2]);
             sombre = Color.getHSBColor(hsb[0], 0, hsb[2] * .9f);
