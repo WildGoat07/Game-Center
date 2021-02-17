@@ -11,6 +11,7 @@ public class Serveur {
 
     public static void main(String[] args) throws IOException {
         ecoute = new ServerSocket(Constantes.PORT);
+        System.out.println("Serveur lancé sur le port " + Constantes.PORT);
         while (true) {
             var client = ecoute.accept();
             new Thread(() -> gestionClient(client)).start();
