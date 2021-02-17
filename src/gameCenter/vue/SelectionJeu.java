@@ -37,6 +37,7 @@ public class SelectionJeu extends JPanel {
         var pong = new JButton("Pong");
         listeBoutons.add(pong);
         pong.setAlignmentX(Component.CENTER_ALIGNMENT);
+        listeBoutons.add(Box.createVerticalStrut(10));
         var tictactoe = new JButton("Tic-Tac-Toe");
         listeBoutons.add(tictactoe);
         tictactoe.setAlignmentX(Component.CENTER_ALIGNMENT);

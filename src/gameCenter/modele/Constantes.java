@@ -16,4 +16,5 @@ public final class Constantes {
 
     public static final int TICTACTOE_HAUTEUR = 40;
     public static final int TICTACTOE_LARGEUR = 30;
+    
 }

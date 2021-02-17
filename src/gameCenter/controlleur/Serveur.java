@@ -38,7 +38,7 @@ public class Serveur {
                 }
                     break;
                 case Constantes.CHOIX_TICTACTOE: {
-
+                        new ServeurTictactoe(client).demarrer();
                     }
                         break;
             }

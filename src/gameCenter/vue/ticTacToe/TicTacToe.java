@@ -31,7 +31,7 @@ public class TicTacToe extends Jeu {
         setMaximumSize(getMinimumSize());
         setPreferredSize(getMinimumSize());
         fond = new gameCenter.controlleur.dessin.Rectangle();
-        fond.setCouleur(new Color(0, 0, 20));
+        fond.setCouleur(new Color(0, 20, 0));
         try {
             serialiseur = new ObjectInputStream(Client.socket.getInputStream());
         } catch (IOException e) {

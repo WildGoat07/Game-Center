@@ -24,7 +24,7 @@ public class ServeurTictactoe {
 
         while (true) {
             try {
-                client.getOutputStream().write("hello");
+                System.out.println("hello there !");
             } catch (IOException e) {
                 System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
                         + LocalTime.now().getSecond() + "] " + "Une erreur est survenue : " + e.getMessage());
