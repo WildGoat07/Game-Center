@@ -18,292 +18,315 @@ public class Forme extends Transformable implements Dessinable {
     private int type;
     private Bloc[] blocs;
     private int rotation;
+    private Color couleur;
 
     public Forme(int type) {
         this.type = type;
         rotation = 0;
         blocs = new Bloc[4];
-        Color couleur;
         switch (type) {
-            case CUBE:
-                couleur = Color.YELLOW;
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(0, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                break;
-            case LONG:
-                couleur = Color.CYAN;
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(0, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
-                break;
-            case S_AUTISTE:
-                couleur = new Color(118, 232, 62);
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(0, 0));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                break;
-            case S_AUTISTE_INVERSE:
-                couleur = Color.RED;
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(0, 0));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                break;
-            case T_NAIN:
-                couleur = new Color(156, 75, 236);
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(0, 0));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                break;
-            case L:
-                couleur = Color.BLUE;
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                break;
-            case L_INVERSE:
-                couleur = new Color(234, 175, 56);
-                blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
-                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                break;
+        case CUBE:
+            couleur = Color.YELLOW;
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(0, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            break;
+        case LONG:
+            couleur = Color.CYAN;
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(0, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
+            break;
+        case S_AUTISTE:
+            couleur = new Color(118, 232, 62);
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(0, 0));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            break;
+        case S_AUTISTE_INVERSE:
+            couleur = Color.RED;
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(0, 0));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            break;
+        case T_NAIN:
+            couleur = new Color(156, 75, 236);
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(0, 0));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            break;
+        case L:
+            couleur = Color.BLUE;
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            break;
+        case L_INVERSE:
+            couleur = new Color(234, 175, 56);
+            blocs[0] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+            blocs[1] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            blocs[2] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+            blocs[3] = new Bloc(couleur, Tetris.TAILLE_BLOC);
+            blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+            break;
         }
     }
 
+    // #region orientation
     public void orienter(int r) {
         rotation = r % 4;
         if (rotation < 0)
             rotation += 4;
         switch (rotation) {
-            case 0:
-                switch (type) {
-                    case CUBE:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case LONG:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
-                        break;
-                    case S_AUTISTE:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                    case S_AUTISTE_INVERSE:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                    case T_NAIN:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case L:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                    case L_INVERSE:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                }
+        case 0:
+            switch (type) {
+            case CUBE:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
                 break;
-            case 1:
-                switch (type) {
-                    case CUBE:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case LONG:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC * 2, 0));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        break;
-                    case S_AUTISTE:
-                        blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case S_AUTISTE_INVERSE:
-                        blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case T_NAIN:
-                        blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case L:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case L_INVERSE:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(0, 0));
-                        break;
-                }
+            case LONG:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
                 break;
-            case 2:
-                switch (type) {
-                    case CUBE:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case LONG:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
-                        break;
-                    case S_AUTISTE:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                    case S_AUTISTE_INVERSE:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        break;
-                    case T_NAIN:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case L:
-                        blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, 0));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        break;
-                    case L_INVERSE:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[3].setPosition(new Vecteur(0, 0));
-                        break;
-                }
+            case S_AUTISTE:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
                 break;
-            case 3:
-                switch (type) {
-                    case CUBE:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        break;
-                    case LONG:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC * 2, 0));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        break;
-                    case S_AUTISTE:
-                        blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case S_AUTISTE_INVERSE:
-                        blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case T_NAIN:
-                        blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
-                        blocs[1].setPosition(new Vecteur(0, 0));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        break;
-                    case L:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
-                        break;
-                    case L_INVERSE:
-                        blocs[0].setPosition(new Vecteur(0, 0));
-                        blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
-                        blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
-                        blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
-                        break;
-                }
+            case S_AUTISTE_INVERSE:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
                 break;
+            case T_NAIN:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                break;
+            case L:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                break;
+            case L_INVERSE:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                break;
+            }
+            break;
+        case 1:
+            switch (type) {
+            case CUBE:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                break;
+            case LONG:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC * 2, 0));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                break;
+            case S_AUTISTE:
+                blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                break;
+            case S_AUTISTE_INVERSE:
+                blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                break;
+            case T_NAIN:
+                blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                break;
+            case L:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                break;
+            case L_INVERSE:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(0, 0));
+                break;
+            }
+            break;
+        case 2:
+            switch (type) {
+            case CUBE:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                break;
+            case LONG:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 3));
+                break;
+            case S_AUTISTE:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                break;
+            case S_AUTISTE_INVERSE:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                break;
+            case T_NAIN:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                break;
+            case L:
+                blocs[0].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, 0));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                break;
+            case L_INVERSE:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[3].setPosition(new Vecteur(0, 0));
+                break;
+            }
+            break;
+        case 3:
+            switch (type) {
+            case CUBE:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                break;
+            case LONG:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(-Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC * 2, 0));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                break;
+            case S_AUTISTE:
+                blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                break;
+            case S_AUTISTE_INVERSE:
+                blocs[0].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                blocs[2].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                break;
+            case T_NAIN:
+                blocs[0].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC));
+                blocs[1].setPosition(new Vecteur(0, 0));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[3].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                break;
+            case L:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, 0));
+                break;
+            case L_INVERSE:
+                blocs[0].setPosition(new Vecteur(0, 0));
+                blocs[1].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC));
+                blocs[2].setPosition(new Vecteur(0, Tetris.TAILLE_BLOC * 2));
+                blocs[3].setPosition(new Vecteur(Tetris.TAILLE_BLOC, Tetris.TAILLE_BLOC * 2));
+                break;
+            }
+            break;
         }
     }
+
+    // #endregion
 
     public Vecteur[] collisionLocale() {
         return new Vecteur[] { blocs[0].getPosition(), blocs[1].getPosition(), blocs[2].getPosition(),
                 blocs[3].getPosition() };
     }
 
+    public Vecteur[] collisionFuture(int orientation, int offset) {
+        int rotationActuelle = rotation;
+        orienter(orientation);
+        var resultat = collisionLocale();
+        var transformateur = transformation();
+        transformateur.translate(offset * Tetris.TAILLE_BLOC, 0);
+        for (var i = 0; i < 4; ++i)
+            resultat[i] = new Vecteur(transformateur.transform(resultat[i].versPoint(), null));
+        orienter(rotationActuelle);
+        return resultat;
+    }
+
+    public Vecteur[] collisionFuture(int orientation) {
+        return collisionFuture(orientation, 0);
+    }
+
     public int orientation() {
         return rotation;
+    }
+
+    public Color getCouleur() {
+        return couleur;
     }
 
     public Bloc[] blocs() {

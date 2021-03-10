@@ -51,7 +51,11 @@ public class SelectionJeu extends JPanel {
         tictactoe.setBackground(Color.white);
         tictactoe.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tictactoe);
-        tictactoe.setAlignmentX(Component.LEFT_ALIGNMENT);
+        tictactoe.setAlignmentX(Component.CENTER_ALIGNMENT);
+        listeBoutons.add(Box.createVerticalStrut(10));
+        var retour = new JButton("Quitter");
+        listeBoutons.add(retour);
+        retour.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         listeBoutons.add(Box.createVerticalGlue());
 
@@ -68,7 +72,7 @@ public class SelectionJeu extends JPanel {
                         "Connexion impossible", JOptionPane.ERROR_MESSAGE);
             } else {
                 fenetre.remove(instance);
-                fenetre.add(new Tetris(fenetre));
+                fenetre.add(new Tetris(fenetre, instance));
                 fenetre.revalidate();
             }
             tetris.setEnabled(true);
@@ -132,6 +136,22 @@ public class SelectionJeu extends JPanel {
             demineur.setEnabled(true);
             pong.setEnabled(true);
             tictactoe.setEnabled(true);
+        }));
+        retour.addActionListener((e) -> Client.asynchrone(() -> {
+            try {
+                Client.socket.getOutputStream().write(Constantes.CHOIX_DECONNEXION);
+            } catch (IOException exc) {
+                return exc;
+            }
+            return null;
+        }, (exc) -> {
+            if (exc != null) {
+                JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
+                        "Connexion impossible", JOptionPane.ERROR_MESSAGE);
+            } else {
+                System.exit(0);
+            }
+            System.exit(-2);
         }));
 
         var presentation = new JLabel();

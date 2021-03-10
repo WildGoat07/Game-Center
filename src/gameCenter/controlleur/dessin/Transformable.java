@@ -67,6 +67,6 @@ public class Transformable {
     @Override
     public String toString() {
         return "Position:[" + position.x + ", " + position.y + "] " + "Origine:[" + origine.x + ", " + origine.y + "] "
-                + "Ecehlle:[" + echelle.x + ", " + echelle.y + "] " + "Rotation:[" + rotation + "] ";
+                + "Echelle:[" + echelle.x + ", " + echelle.y + "] " + "Rotation:[" + rotation + "] ";
     }
 }

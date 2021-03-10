@@ -13,8 +13,8 @@ public abstract class Jeu extends JComponent {
      *
      */
     private static final long serialVersionUID = 1L;
-    protected static final int MILLISECONDES = 1000 / 30;
-    private Timer chrono;
+    protected static final int MILLISECONDES = 1000 / 60;
+    protected Timer chrono;
 
     public Jeu(Window fenetre) {
         setMaximumSize(Utilites.tailleMax());
@@ -23,13 +23,12 @@ public abstract class Jeu extends JComponent {
             fenetre.repaint();
         });
         chrono.start();
-
     }
 
-    protected abstract void dessiner(Graphics2D g, Duration delta);
+    protected abstract void dessiner(Graphics2D g);
 
     @Override
     protected void paintComponent(Graphics g) {
-        dessiner((Graphics2D) g, Duration.ofMillis(MILLISECONDES));
+        dessiner((Graphics2D) g);
     }
 }
