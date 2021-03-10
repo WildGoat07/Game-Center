@@ -19,14 +19,20 @@ public class Serveur {
     }
 
     public static void gestionClient(Socket client) {
+        boolean clientActif = true;
         System.out.println(
                 "[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":" + LocalTime.now().getSecond()
                         + "] " + client.getInetAddress().getCanonicalHostName() + " s'est connecté");
-        try {
-            var choixJeu = client.getInputStream().read();
-            switch (choixJeu) {
+        while (clientActif) {
+            try {
+                var choixJeu = client.getInputStream().read();
+                switch (choixJeu) {
                 case Constantes.CHOIX_TETRIS: {
                     new ServeurTetris(client).demarrer();
+                }
+                    break;
+                case Constantes.CHOIX_DECONNEXION: {
+                    clientActif = false;
                 }
                     break;
                 case Constantes.CHOIX_DEMINEUR: {
@@ -38,19 +44,21 @@ public class Serveur {
                 }
                     break;
                 case Constantes.CHOIX_TICTACTOE: {
-                        new ServeurTictactoe(client).demarrer();
-                    }
-                        break;
+                    // new ServeurTictactoe(client).demarrer();
+                }
+                    break;
+                }
+            } catch (IOException e) {
+                System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
+                        + LocalTime.now().getSecond() + "] " + "Une erreur est survenue : " + e.getMessage());
+                clientActif = false;
             }
-        } catch (IOException e) {
-            System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
-                    + LocalTime.now().getSecond() + "] " + "Une erreur est survenue : " + e.getMessage());
         }
         System.err.println("[" + LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + ":"
                 + LocalTime.now().getSecond() + "] déconnexion du client.");
         try {
             client.close();
-        } catch (IOException e2) {
+        } catch (IOException e) {
         }
     }
 }
