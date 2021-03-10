@@ -5,6 +5,7 @@ import javax.swing.*;
 import gameCenter.controlleur.*;
 import gameCenter.modele.*;
 import gameCenter.vue.tetris.Tetris;
+import gameCenter.vue.ticTacToe.TicTacToe;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,23 +25,33 @@ public class SelectionJeu extends JPanel {
         add(listeBoutons, BorderLayout.WEST);
         listeBoutons.setMaximumSize(Utilites.HauteurMax(150));
         listeBoutons.setLayout(new BoxLayout(listeBoutons, BoxLayout.Y_AXIS));
+        listeBoutons.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        listeBoutons.setBackground(Color.black);
         listeBoutons.add(Box.createVerticalGlue());
 
         var tetris = new JButton("Tetris");
+        tetris.setBackground(Color.white);
+        tetris.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tetris);
-        tetris.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tetris.setAlignmentX(Component.LEFT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var demineur = new JButton("Demineur");
+        demineur.setBackground(Color.white);
+        demineur.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(demineur);
-        demineur.setAlignmentX(Component.CENTER_ALIGNMENT);
+        demineur.setAlignmentX(Component.LEFT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var pong = new JButton("Pong");
+        pong.setBackground(Color.white);
+        pong.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(pong);
-        pong.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pong.setAlignmentX(Component.LEFT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var tictactoe = new JButton("Tic-Tac-Toe");
+        tictactoe.setBackground(Color.white);
+        tictactoe.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tictactoe);
-        tictactoe.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tictactoe.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         listeBoutons.add(Box.createVerticalGlue());
 
@@ -113,6 +124,9 @@ public class SelectionJeu extends JPanel {
                 JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
                         "Connexion impossible", JOptionPane.ERROR_MESSAGE);
             } else {
+                fenetre.remove(instance);
+                fenetre.add(new TicTacToe(fenetre));
+                fenetre.revalidate();
             }
             tetris.setEnabled(true);
             demineur.setEnabled(true);
