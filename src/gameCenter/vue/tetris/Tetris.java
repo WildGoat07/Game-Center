@@ -35,7 +35,6 @@ public class Tetris extends Jeu {
     private Object mutex;
     private KeyEventDispatcher evenementTouche;
     private Forme formeActuelle = null;
-    private Font font;
     boolean perdu;
     boolean va_plus_vite_s_il_te_plait_petite_piece;
 
@@ -61,17 +60,6 @@ public class Tetris extends Jeu {
             System.exit(1);
         }
         mutex = new Object();
-//        try {
-//            font = Font.createFont(Font.TRUETYPE_FONT, new File("./assets/fonts/FORCED SQUARE.ttf")).deriveFont(18f);
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-//                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-//            System.exit(1);
-//        } catch (FontFormatException e) {
-//            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-//                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-//            System.exit(1);
-//        }
         sync = new Thread(() -> {
             while (true) {
                 try {
@@ -216,7 +204,6 @@ public class Tetris extends Jeu {
             if (formeActuelle != null)
                 formeActuelle.dessiner(g);
             g.setColor(Color.BLACK);
-            g.setFont(font);
             if (perdu) {
                 g.drawString("Perdu !", TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 10, 20);
                 g.drawString("Score : " + score, TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 10, 40);
