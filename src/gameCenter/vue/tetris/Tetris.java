@@ -29,6 +29,7 @@ public class Tetris extends Jeu {
     private Bloc[][] plateau;
     private int score;
     private gameCenter.controlleur.dessin.Rectangle fond;
+    private gameCenter.controlleur.dessin.Rectangle ombre;
     private ObjectInputStream serialiseurEntree;
     private ObjectOutputStream serialiseurSortie;
     private Thread sync;
@@ -51,6 +52,8 @@ public class Tetris extends Jeu {
         fond = new gameCenter.controlleur.dessin.Rectangle();
         fond.setCouleur(new Color(20, 20, 60));
         fond.setTaille(new Vecteur(Constantes.TETRIS_LARGEUR * TAILLE_BLOC, Constantes.TETRIS_HAUTEUR * TAILLE_BLOC));
+        ombre = new gameCenter.controlleur.dessin.Rectangle();
+        ombre.setCouleur(new Color(150, 150, 50, 80));
         try {
             serialiseurEntree = new ObjectInputStream(Client.socket.getInputStream());
             serialiseurSortie = new ObjectOutputStream(Client.socket.getOutputStream());
@@ -85,8 +88,10 @@ public class Tetris extends Jeu {
                     while (tourActuel) {
                         long millisecondes = System.nanoTime() / 1000000;
                         synchronized (mutex) {
-                            formeActuelle
-                                    .deplacerPosition(new Vecteur(0, VITESSE_DESCENTE * TAILLE_BLOC * (va_plus_vite_s_il_te_plait_petite_piece ? PLUS_RAPIDE_MULT : 1)).multiplier(delta));
+                            formeActuelle.deplacerPosition(new Vecteur(0,
+                                    VITESSE_DESCENTE * TAILLE_BLOC
+                                            * (va_plus_vite_s_il_te_plait_petite_piece ? PLUS_RAPIDE_MULT : 1))
+                                                    .multiplier(delta));
                             if (collisionPlateau(formeActuelle.collisionFuture(formeActuelle.orientation()))) {
                                 tourActuel = false;
                                 break;
@@ -159,9 +164,7 @@ public class Tetris extends Jeu {
                                 KeyboardFocusManager.getCurrentKeyboardFocusManager()
                                         .removeKeyEventDispatcher(evenementTouche);
                             }
-                        }
-                        else if (e.getID() == KeyEvent.KEY_RELEASED)
-                        {
+                        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
                             if (!perdu && e.getKeyCode() == KeyEvent.VK_S)
                                 va_plus_vite_s_il_te_plait_petite_piece = false;
                         }
@@ -194,7 +197,19 @@ public class Tetris extends Jeu {
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
         fond.dessiner(g);
         synchronized (mutex) {
+            if (formeActuelle != null) {
+                float minx = TAILLE_BLOC * Constantes.TETRIS_LARGEUR, maxx = 0;
+                for (var bloc : formeActuelle.collisionFuture(formeActuelle.orientation())) {
+                    if (minx > bloc.x)
+                        minx = bloc.x;
+                    if (maxx < bloc.x)
+                        maxx = bloc.x;
+                }
+                ombre.setPosition(new Vecteur(minx, 0));
+                ombre.setTaille(new Vecteur(maxx - minx + TAILLE_BLOC, TAILLE_BLOC * Constantes.TETRIS_HAUTEUR));
 
+                ombre.dessiner(g);
+            }
             if (plateau != null)
                 for (int i = 0; i < Constantes.TETRIS_LARGEUR; ++i)
                     for (int j = 0; j < Constantes.TETRIS_HAUTEUR; ++j)
@@ -214,6 +229,7 @@ public class Tetris extends Jeu {
                 g.drawString("Contrôles :", TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 10, 40);
                 g.drawString("A, E : tourner la pièce", TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 30, 60);
                 g.drawString("Q, D : déplacer la pièce", TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 30, 80);
+                g.drawString("s : accélérer la descente", TAILLE_BLOC * Constantes.TETRIS_LARGEUR + 30, 100);
             }
         }
     }
