@@ -124,7 +124,12 @@ public class TicTacToe extends JPanel{
             checkWin();
         });
 
-        retour = new JButton("retour au menu");
+        retour = new JButton();
+        retour.setText("retour au menu");
+        retour.setVisible(false);
+        retour.setForeground(Color.black);
+        retour.setBackground(Color.white);
+        panelWindow.add(retour);
         retour.addActionListener(e -> {
             fenetre.add(new SelectionJeu(fenetre));
             fenetre.revalidate();
@@ -212,6 +217,7 @@ public class TicTacToe extends JPanel{
             for (JButton button: listButton) {
                 button.setEnabled(false);
                 labelTitle.setText("victory");
+                retour.setVisible(true);
             }
         }
     }
