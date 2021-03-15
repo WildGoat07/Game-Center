@@ -33,29 +33,32 @@ public class SelectionJeu extends JPanel {
         tetris.setBackground(Color.white);
         tetris.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tetris);
-        tetris.setAlignmentX(Component.LEFT_ALIGNMENT);
+        tetris.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var demineur = new JButton("Demineur");
         demineur.setBackground(Color.white);
         demineur.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(demineur);
-        demineur.setAlignmentX(Component.LEFT_ALIGNMENT);
+        demineur.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var pong = new JButton("Pong");
         pong.setBackground(Color.white);
         pong.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(pong);
-        pong.setAlignmentX(Component.LEFT_ALIGNMENT);
+        pong.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var tictactoe = new JButton("Tic-Tac-Toe");
         tictactoe.setBackground(Color.white);
         tictactoe.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tictactoe);
-        tictactoe.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tictactoe.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var retour = new JButton("Quitter");
+        retour.setBackground(Color.white);
+        retour.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(retour);
-        retour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        retour.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        retour.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         listeBoutons.add(Box.createVerticalGlue());
 
@@ -129,6 +132,7 @@ public class SelectionJeu extends JPanel {
                         "Connexion impossible", JOptionPane.ERROR_MESSAGE);
             } else {
                 fenetre.remove(instance);
+                System.out.println("ftr");
                 fenetre.add(new TicTacToe(fenetre));
                 fenetre.revalidate();
             }

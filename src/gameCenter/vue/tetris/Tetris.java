@@ -58,17 +58,17 @@ public class Tetris extends Jeu {
             System.exit(1);
         }
         mutex = new Object();
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("./assets/fonts/FORCED SQUARE.ttf")).deriveFont(18f);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        } catch (FontFormatException e) {
-            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-        }
+//        try {
+//            font = Font.createFont(Font.TRUETYPE_FONT, new File("./assets/fonts/FORCED SQUARE.ttf")).deriveFont(18f);
+//        } catch (IOException e) {
+//            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
+//                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
+//            System.exit(1);
+//        } catch (FontFormatException e) {
+//            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
+//                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
+//            System.exit(1);
+//        }
         sync = new Thread(() -> {
             while (true) {
                 try {

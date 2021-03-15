@@ -3,6 +3,8 @@ package gameCenter.vue.ticTacToe;
 import gameCenter.controlleur.Client;
 import gameCenter.controlleur.dessin.Rectangle;
 import gameCenter.modele.Constantes;
+import gameCenter.vue.SelectionJeu;
+import gameCenter.vue.tetris.Tetris;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +43,8 @@ public class TicTacToe extends JPanel{
     private JButton btn9;
     private JButton[] listButton;
 
+    private JButton retour;
+
     private String[] listStatement;
 
     private JLabel labelTitle;
@@ -50,6 +54,8 @@ public class TicTacToe extends JPanel{
     private JPanel panelCase;
 
     public TicTacToe(Window fenetre) {
+        repaint();
+        revalidate();
         try {
             serialiseur = new ObjectInputStream(Client.socket.getInputStream());
         } catch (IOException e) {
@@ -116,6 +122,12 @@ public class TicTacToe extends JPanel{
             System.out.println("9");
             listButton[8].setText("O");
             checkWin();
+        });
+
+        retour = new JButton("retour au menu");
+        retour.addActionListener(e -> {
+            fenetre.add(new SelectionJeu(fenetre));
+            fenetre.revalidate();
         });
 
         repaint();
