@@ -24,6 +24,7 @@ public class Tetris extends Jeu {
 
     public static final int TAILLE_BLOC = 16;
     public static final float VITESSE_DESCENTE = 3;
+    public static final float PLUS_RAPIDE_MULT = 3;
 
     private Bloc[][] plateau;
     private int score;
@@ -36,9 +37,11 @@ public class Tetris extends Jeu {
     private Forme formeActuelle = null;
     private Font font;
     boolean perdu;
+    boolean va_plus_vite_s_il_te_plait_petite_piece;
 
     public Tetris(Window fenetre, JComponent menu) {
         super(fenetre);
+        va_plus_vite_s_il_te_plait_petite_piece = false;
         var instance = this;
         plateau = new Bloc[Constantes.TETRIS_LARGEUR][Constantes.TETRIS_HAUTEUR];
         setMinimumSize(new Dimension(Constantes.TETRIS_LARGEUR * TAILLE_BLOC, Constantes.TETRIS_HAUTEUR * TAILLE_BLOC));
@@ -95,7 +98,7 @@ public class Tetris extends Jeu {
                         long millisecondes = System.nanoTime() / 1000000;
                         synchronized (mutex) {
                             formeActuelle
-                                    .deplacerPosition(new Vecteur(0, VITESSE_DESCENTE * TAILLE_BLOC).multiplier(delta));
+                                    .deplacerPosition(new Vecteur(0, VITESSE_DESCENTE * TAILLE_BLOC * (va_plus_vite_s_il_te_plait_petite_piece ? PLUS_RAPIDE_MULT : 1)).multiplier(delta));
                             if (collisionPlateau(formeActuelle.collisionFuture(formeActuelle.orientation()))) {
                                 tourActuel = false;
                                 break;
@@ -146,6 +149,8 @@ public class Tetris extends Jeu {
                     @Override
                     public boolean dispatchKeyEvent(KeyEvent e) {
                         if (e.getID() == KeyEvent.KEY_PRESSED) {
+                            if (!perdu && e.getKeyCode() == KeyEvent.VK_S)
+                                va_plus_vite_s_il_te_plait_petite_piece = true;
                             if (!perdu && e.getKeyCode() == KeyEvent.VK_A && !collisionPlateau(
                                     formeActuelle.collisionFuture(formeActuelle.orientation() + 1)))
                                 formeActuelle.orienter(formeActuelle.orientation() + 1);
@@ -166,6 +171,11 @@ public class Tetris extends Jeu {
                                 KeyboardFocusManager.getCurrentKeyboardFocusManager()
                                         .removeKeyEventDispatcher(evenementTouche);
                             }
+                        }
+                        else if (e.getID() == KeyEvent.KEY_RELEASED)
+                        {
+                            if (!perdu && e.getKeyCode() == KeyEvent.VK_S)
+                                va_plus_vite_s_il_te_plait_petite_piece = false;
                         }
                         return false;
                     }
