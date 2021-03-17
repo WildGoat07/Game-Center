@@ -5,6 +5,7 @@ import javax.swing.*;
 import gameCenter.controlleur.*;
 import gameCenter.modele.*;
 import gameCenter.vue.tetris.Tetris;
+import gameCenter.vue.ticTacToe.TicTacToe;
 import gameCenter.vue.allumettes.Allumettes;
 
 import java.awt.*;
@@ -25,23 +26,34 @@ public class SelectionJeu extends JPanel {
         add(listeBoutons, BorderLayout.WEST);
         listeBoutons.setMaximumSize(Utilites.HauteurMax(150));
         listeBoutons.setLayout(new BoxLayout(listeBoutons, BoxLayout.Y_AXIS));
+        listeBoutons.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        listeBoutons.setBackground(Color.black);
         listeBoutons.add(Box.createVerticalGlue());
 
         var tetris = new JButton("Tetris");
+        tetris.setBackground(Color.white);
+        tetris.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tetris);
-        tetris.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tetris.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var allumettes = new JButton("Allumettes");
+        allumettes.setBackground(Color.white);
+        allumettes.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(allumettes);
         allumettes.setAlignmentX(Component.CENTER_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var tictactoe = new JButton("Tic-Tac-Toe");
+        tictactoe.setBackground(Color.white);
+        tictactoe.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(tictactoe);
-        tictactoe.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tictactoe.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var retour = new JButton("Quitter");
+        retour.setBackground(Color.white);
+        retour.setPreferredSize(new Dimension(110, 40));
         listeBoutons.add(retour);
-        retour.setAlignmentX(Component.CENTER_ALIGNMENT);
+        retour.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        retour.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         listeBoutons.add(Box.createVerticalGlue());
 
@@ -97,6 +109,10 @@ public class SelectionJeu extends JPanel {
                 JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
                         "Connexion impossible", JOptionPane.ERROR_MESSAGE);
             } else {
+                fenetre.remove(instance);
+                System.out.println("ftr");
+                fenetre.add(new TicTacToe(fenetre));
+                fenetre.revalidate();
             }
             tetris.setEnabled(true);
             allumettes.setEnabled(true);
