@@ -7,6 +7,7 @@ import gameCenter.modele.*;
 import gameCenter.vue.tetris.Tetris;
 import gameCenter.vue.ticTacToe.ChoixHote;
 import gameCenter.vue.ticTacToe.TicTacToe;
+import gameCenter.vue.allumettes.Allumettes;
 
 import java.awt.*;
 import java.io.IOException;
@@ -36,17 +37,11 @@ public class SelectionJeu extends JPanel {
         listeBoutons.add(tetris);
         tetris.setAlignmentX(Component.RIGHT_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
-        var demineur = new JButton("Demineur");
-        demineur.setBackground(Color.white);
-        demineur.setPreferredSize(new Dimension(110, 40));
-        listeBoutons.add(demineur);
-        demineur.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        listeBoutons.add(Box.createVerticalStrut(10));
-        var pong = new JButton("Pong");
-        pong.setBackground(Color.white);
-        pong.setPreferredSize(new Dimension(110, 40));
-        listeBoutons.add(pong);
-        pong.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        var allumettes = new JButton("Allumettes");
+        allumettes.setBackground(Color.white);
+        allumettes.setPreferredSize(new Dimension(110, 40));
+        listeBoutons.add(allumettes);
+        allumettes.setAlignmentX(Component.CENTER_ALIGNMENT);
         listeBoutons.add(Box.createVerticalStrut(10));
         var tictactoe = new JButton("Tic-Tac-Toe");
         tictactoe.setBackground(Color.white);
@@ -80,13 +75,12 @@ public class SelectionJeu extends JPanel {
                 fenetre.revalidate();
             }
             tetris.setEnabled(true);
-            demineur.setEnabled(true);
-            pong.setEnabled(true);
+            allumettes.setEnabled(true);
             tictactoe.setEnabled(true);
         }));
-        demineur.addActionListener((e) -> Client.asynchrone(() -> {
+        allumettes.addActionListener((e) -> Client.asynchrone(() -> {
             try {
-                Client.socket.getOutputStream().write(Constantes.CHOIX_DEMINEUR);
+                Client.socket.getOutputStream().write(Constantes.CHOIX_ALLUMETTES);
             } catch (IOException exc) {
                 return exc;
             }
@@ -96,28 +90,12 @@ public class SelectionJeu extends JPanel {
                 JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
                         "Connexion impossible", JOptionPane.ERROR_MESSAGE);
             } else {
+                fenetre.remove(instance);
+                fenetre.add(new Allumettes(fenetre, instance));
+                fenetre.revalidate();
             }
             tetris.setEnabled(true);
-            demineur.setEnabled(true);
-            pong.setEnabled(true);
-            tictactoe.setEnabled(true);
-        }));
-        pong.addActionListener((e) -> Client.asynchrone(() -> {
-            try {
-                Client.socket.getOutputStream().write(Constantes.CHOIX_PONG);
-            } catch (IOException exc) {
-                return exc;
-            }
-            return null;
-        }, (exc) -> {
-            if (exc != null) {
-                JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
-                        "Connexion impossible", JOptionPane.ERROR_MESSAGE);
-            } else {
-            }
-            tetris.setEnabled(true);
-            demineur.setEnabled(true);
-            pong.setEnabled(true);
+            allumettes.setEnabled(true);
             tictactoe.setEnabled(true);
         }));
         tictactoe.addActionListener((e) -> Client.asynchrone(() -> {
@@ -138,8 +116,7 @@ public class SelectionJeu extends JPanel {
                 fenetre.revalidate();
             }
             tetris.setEnabled(true);
-            demineur.setEnabled(true);
-            pong.setEnabled(true);
+            allumettes.setEnabled(true);
             tictactoe.setEnabled(true);
         }));
         retour.addActionListener((e) -> Client.asynchrone(() -> {

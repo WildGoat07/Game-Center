@@ -35,11 +35,7 @@ public class Serveur {
                     clientActif = false;
                 }
                     break;
-                case Constantes.CHOIX_DEMINEUR: {
-
-                }
-                    break;
-                case Constantes.CHOIX_PONG: {
+                case Constantes.CHOIX_ALLUMETTES: {
 
                 }
                     break;
