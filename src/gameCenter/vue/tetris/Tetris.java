@@ -50,10 +50,10 @@ public class Tetris extends Jeu {
         score = 0;
         perdu = false;
         fond = new gameCenter.controlleur.dessin.Rectangle();
-        fond.setCouleur(new Color(20, 20, 60));
+        fond.setCouleur(new Color(7, 24, 48));
         fond.setTaille(new Vecteur(Constantes.TETRIS_LARGEUR * TAILLE_BLOC, Constantes.TETRIS_HAUTEUR * TAILLE_BLOC));
         ombre = new gameCenter.controlleur.dessin.Rectangle();
-        ombre.setCouleur(new Color(150, 150, 50, 80));
+        ombre.setCouleur(new Color(15, 53, 106, 80));
         try {
             serialiseurEntree = new ObjectInputStream(Client.socket.getInputStream());
             serialiseurSortie = new ObjectOutputStream(Client.socket.getOutputStream());

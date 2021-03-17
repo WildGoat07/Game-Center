@@ -22,8 +22,8 @@ public class TicTacToe extends JPanel{
     private static final int TAILLE_CASE = 64;
 
     private gameCenter.controlleur.dessin.Rectangle fond;
-    private ObjectInputStream serialiseur;
-    private ObjectOutputStream send;
+    private ObjectInputStream recevoir;
+    private ObjectOutputStream envoyer;
     private Thread sync;
     private Object mutex;
     private String[][] table;
@@ -57,14 +57,14 @@ public class TicTacToe extends JPanel{
         repaint();
         revalidate();
         try {
-            serialiseur = new ObjectInputStream(Client.socket.getInputStream());
+            recevoir = new ObjectInputStream(Client.socket.getInputStream());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
                     "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
-            send = new ObjectOutputStream(Client.socket.getOutputStream());
+            envoyer = new ObjectOutputStream(Client.socket.getOutputStream());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
                     "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
@@ -77,52 +77,14 @@ public class TicTacToe extends JPanel{
         displayComponent(listStatement);
 
 
-
-        listButton[0].addActionListener(e -> {
-            System.out.println("1");
-            listButton[0].setText("O");
-            checkWin();
-        });
-        listButton[1].addActionListener(e -> {
-            System.out.println("2");
-            listButton[1].setText("O");
-            checkWin();
-        });
-        listButton[2].addActionListener(e -> {
-            System.out.println("3");
-            listButton[2].setText("O");
-            checkWin();
-        });
-        listButton[3].addActionListener(e -> {
-            System.out.println("4");
-            listButton[3].setText("O");
-            checkWin();
-        });
-        listButton[4].addActionListener(e -> {
-            System.out.println("5");
-            listButton[4].setText("O");
-            checkWin();
-        });
-        listButton[5].addActionListener(e -> {
-            System.out.println("6");
-            listButton[5].setText("O");
-            checkWin();
-        });
-        listButton[6].addActionListener(e -> {
-            System.out.println("7");
-            listButton[6].setText("O");
-            checkWin();
-        });
-        listButton[7].addActionListener(e -> {
-            System.out.println("8");
-            listButton[7].setText("O");
-            checkWin();
-        });
-        listButton[8].addActionListener(e -> {
-            System.out.println("9");
-            listButton[8].setText("O");
-            checkWin();
-        });
+        for (int i=0; i<9; i++){
+            int finalI = i;
+            listButton[i].addActionListener(e -> {
+                System.out.println(finalI +1);
+                listButton[finalI].setText("O");
+                checkWin();
+            });
+        }
 
         retour = new JButton();
         retour.setText("retour au menu");
@@ -175,7 +137,7 @@ public class TicTacToe extends JPanel{
 
     private void setListStatement(){
         try {
-            listStatement = (String[]) serialiseur.readObject();
+            listStatement = (String[]) recevoir.readObject();
             whosTurn = "X";
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

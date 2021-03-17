@@ -5,6 +5,7 @@ import javax.swing.*;
 import gameCenter.controlleur.*;
 import gameCenter.modele.*;
 import gameCenter.vue.tetris.Tetris;
+import gameCenter.vue.ticTacToe.ChoixHote;
 import gameCenter.vue.ticTacToe.TicTacToe;
 
 import java.awt.*;
@@ -133,7 +134,7 @@ public class SelectionJeu extends JPanel {
             } else {
                 fenetre.remove(instance);
                 System.out.println("ftr");
-                fenetre.add(new TicTacToe(fenetre));
+                fenetre.add(new ChoixHote(fenetre, instance));
                 fenetre.revalidate();
             }
             tetris.setEnabled(true);
