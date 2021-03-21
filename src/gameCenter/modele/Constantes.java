@@ -18,7 +18,12 @@ public final class Constantes {
     public static final int TICTACTOE_LARGEUR = 30;
     public static final int TICTACTOE_HOTE = 1;
     public static final int TICTACTOE_INVITE = 0;
-    public static final int TICTACTOE_TROUVER = 1;
-    public static final int TICTACTOE_NON_TROUVER = 0;
+    public static final int TICTACTOE_VALIDE = 1;
+    public static final int TICTACTOE_INVALIDE = 0;
+    public static final int TICTACTOE_ACTION_CASE = 1;
+    public static final int TICTACTOE_ACTION_RETOUR = 0;
+    public static final int TICTACTOE_CASE_JOUEUR1 = 1;
+    public static final int TICTACTOE_CASE_JOUEUR2 = -1;
+    public static final int TICTACTOE_CASE_NON_COCHEE = 0;
 
 }

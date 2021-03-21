@@ -106,7 +106,7 @@ public class MainWindow extends JFrame {
                     champIP.setEnabled(true);
                 } else {
                     instance.remove(PanelConnexion);
-                    instance.add(new SelectionJeu(instance));
+                    instance.add(new SelectionJeu(instance), BorderLayout.CENTER);
                     instance.repaint();
                 }
             });

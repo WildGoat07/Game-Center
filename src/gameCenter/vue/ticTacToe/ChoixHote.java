@@ -14,6 +14,10 @@ import java.io.ObjectOutputStream;
 
 public class ChoixHote extends JPanel {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8474902020304065203L;
     private JButton btn_connexion;
     private JButton btn_creationSession;
     private JLabel lbl_erreurHote;
@@ -21,20 +25,11 @@ public class ChoixHote extends JPanel {
     private JTextField edt_codeHote;
     private JTextField edt_codeConnexion;
 
-
     public ChoixHote(Window fenetre, JComponent menu) {
 
         var instance = this;
 
-        ObjectInputStream recevoir;
         ObjectOutputStream envoyer;
-        try {
-            recevoir = new ObjectInputStream(Client.socket.getInputStream());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         try {
             envoyer = new ObjectOutputStream(Client.socket.getOutputStream());
         } catch (IOException e) {
@@ -42,19 +37,18 @@ public class ChoixHote extends JPanel {
                     "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         edt_codeConnexion = new JTextField(10);
-        edt_codeConnexion.setAlignmentX(LEFT_ALIGNMENT);
+        edt_codeConnexion.setMaximumSize(new Dimension(150, 20));
         edt_codeHote = new JTextField(10);
-        edt_codeHote.setAlignmentX(LEFT_ALIGNMENT);
+        edt_codeHote.setMaximumSize(new Dimension(150, 20));
         btn_connexion = new JButton("Rejoindre session");
         btn_connexion.setMaximumSize(Utilites.LargeurMax(20));
-        btn_connexion.setBackground(Color.white);
-        btn_connexion.setAlignmentX(LEFT_ALIGNMENT);
+        btn_connexion.setBackground(Color.WHITE);
+        btn_connexion.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         btn_creationSession = new JButton("Créer session");
-        btn_creationSession.setAlignmentX(LEFT_ALIGNMENT);
+        btn_creationSession.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         btn_creationSession.setMaximumSize(Utilites.LargeurMax(20));
-        btn_creationSession.setBackground(Color.white);
+        btn_creationSession.setBackground(Color.WHITE);
         lbl_erreurHote = new JLabel("Code vide, vérifier la saisie");
         lbl_erreurHote.setForeground(Color.red);
         lbl_erreurHote.setVisible(false);
@@ -64,11 +58,15 @@ public class ChoixHote extends JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalGlue());
+        add(new JLabel("Identifiant de session :"));
         add(edt_codeHote);
+        add(Box.createVerticalStrut(10));
         add(btn_creationSession);
         add(lbl_erreurHote);
         add(Box.createVerticalStrut(50));
+        add(new JLabel("Identifiant de session :"));
         add(edt_codeConnexion);
+        add(Box.createVerticalStrut(10));
         add(btn_connexion);
         add(lbl_erreurConnexion);
         add(Box.createVerticalGlue());
@@ -85,24 +83,43 @@ public class ChoixHote extends JPanel {
 
                 Client.asynchrone(() -> {
                     try {
-                        Client.socket.getOutputStream().write(Constantes.TICTACTOE_HOTE);
+                        envoyer.write(Constantes.TICTACTOE_HOTE);
                         envoyer.writeObject(edt_codeHote.getText());
+                        if (Client.socket.getInputStream().read() == Constantes.TICTACTOE_INVALIDE) {
+                            return new InvalidObjectException("non");
+                        }
                     } catch (IOException exc) {
                         return exc;
                     }
                     return null;
                 }, (exc) -> {
-                    if (exc != null) {
+                    edt_codeConnexion.setEnabled(true);
+                    edt_codeHote.setEnabled(true);
+                    btn_connexion.setEnabled(true);
+                    btn_creationSession.setEnabled(true);
+                    if (exc instanceof InvalidObjectException)
+                        JOptionPane.showMessageDialog(fenetre, "Partie déjà existante", "Partie déjà existante",
+                                JOptionPane.WARNING_MESSAGE);
+                    else if (exc != null)
                         JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
                                 "Connexion impossible", JOptionPane.ERROR_MESSAGE);
-                        edt_codeConnexion.setEnabled(true);
-                        edt_codeHote.setEnabled(true);
-                        btn_connexion.setEnabled(true);
-                        btn_creationSession.setEnabled(true);
-                    } else {
+                    else {
                         fenetre.remove(instance);
-                        fenetre.add(new TicTacToe(fenetre));
+                        var label = new JLabel("attente d'un autre joueur...");
+                        fenetre.add(label);
                         fenetre.revalidate();
+                        Client.asynchrone(() -> {
+                            try {
+                                Client.socket.getInputStream().read(); // attente d'un joueur
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                                System.exit(1);
+                            }
+                        }, () -> {
+                            fenetre.remove(label);
+                            fenetre.add(new TicTacToe(fenetre, menu));
+                            fenetre.revalidate();
+                        });
                     }
                 });
             }
@@ -120,9 +137,9 @@ public class ChoixHote extends JPanel {
 
                 Client.asynchrone(() -> {
                     try {
-                        Client.socket.getOutputStream().write(Constantes.TICTACTOE_INVITE);
+                        envoyer.write(Constantes.TICTACTOE_INVITE);
                         envoyer.writeObject(edt_codeConnexion.getText());
-                        if (Client.socket.getInputStream().read() == Constantes.TICTACTOE_NON_TROUVER){
+                        if (Client.socket.getInputStream().read() == Constantes.TICTACTOE_INVALIDE) {
                             return new InvalidObjectException("non");
                         }
                     } catch (IOException exc) {
@@ -132,8 +149,8 @@ public class ChoixHote extends JPanel {
                 }, (exc) -> {
                     if (exc != null) {
                         if (exc instanceof InvalidObjectException) {
-                            JOptionPane.showMessageDialog(fenetre, "Partie non trouvée",
-                                    "Partie non trouvée", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(fenetre, "Partie non trouvée", "Partie non trouvée",
+                                    JOptionPane.WARNING_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(fenetre, "Impossible de se connecter : " + exc.getMessage(),
                                     "Connexion impossible", JOptionPane.ERROR_MESSAGE);
@@ -144,7 +161,7 @@ public class ChoixHote extends JPanel {
                         btn_creationSession.setEnabled(true);
                     } else {
                         fenetre.remove(instance);
-                        fenetre.add(new TicTacToe(fenetre));
+                        fenetre.add(new TicTacToe(fenetre, menu));
                         fenetre.revalidate();
                     }
                 });

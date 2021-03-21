@@ -1,186 +1,82 @@
 package gameCenter.vue.ticTacToe;
 
 import gameCenter.controlleur.Client;
-import gameCenter.controlleur.dessin.Rectangle;
 import gameCenter.modele.Constantes;
-import gameCenter.vue.SelectionJeu;
-import gameCenter.vue.tetris.Tetris;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-public class TicTacToe extends JPanel{
+public class TicTacToe extends JPanel {
 
     /**
      *
      */
     private static final long serialVersionUID = 3718214323734367128L;
 
-    private static final int TAILLE_CASE = 64;
+    private JButton[] cases;
+    private int[] etatPlateau;
+    private boolean tourActuel;
 
-    private gameCenter.controlleur.dessin.Rectangle fond;
-    private ObjectInputStream recevoir;
-    private ObjectOutputStream envoyer;
-    private Thread sync;
-    private Object mutex;
-    private String[][] table;
-    private int order;
+    public TicTacToe(Window fenetre, JComponent menu) {
+        add(new JButton("retour"));
+        var panelPrincipal = new JPanel();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        panelPrincipal.setLayout(new GridLayout(3, 3));
+        cases = new JButton[9];
+        etatPlateau = new int[9];
+        tourActuel = false;
+        for (var i = 0; i < 9; ++i) {
+            final var index = i;
+            var bouton = new JButton();
+            bouton.setEnabled(false);
+            cases[i] = bouton;
+            bouton.setBackground(Color.WHITE);
+            bouton.setForeground(Color.BLACK);
+            panelPrincipal.add(bouton);
+            bouton.addActionListener((e) -> {
+                for (var j = 0; j < 9; ++j)
+                    cases[j].setEnabled(false);
+                Client.asynchrone(() -> {
+                    try {
+                        Client.socket.getOutputStream().write(Constantes.TICTACTOE_VALIDE);
+                        Client.socket.getOutputStream().write(index);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                        System.exit(1);
+                    }
 
-    private JLabel title;
-    private String whosTurn;
-
-    private JButton btn1;
-    private JButton btn2;
-    private JButton btn3;
-    private JButton btn4;
-    private JButton btn5;
-    private JButton btn6;
-    private JButton btn7;
-    private JButton btn8;
-    private JButton btn9;
-    private JButton[] listButton;
-
-    private JButton retour;
-
-    private String[] listStatement;
-
-    private JLabel labelTitle;
-    private JLabel labelTurn;
-
-    private JPanel panelWindow;
-    private JPanel panelCase;
-
-    public TicTacToe(Window fenetre) {
-        repaint();
-        revalidate();
-        try {
-            recevoir = new ObjectInputStream(Client.socket.getInputStream());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        try {
-            envoyer = new ObjectOutputStream(Client.socket.getOutputStream());
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Une erreur est survenue : " + e.getMessage(),
-                    "erreur de synchronisation", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        listButton = new JButton[9];
-        listStatement = new String[9];
-        setListStatement();
-        displayComponent(listStatement);
-
-
-        for (int i=0; i<9; i++){
-            int finalI = i;
-            listButton[i].addActionListener(e -> {
-                System.out.println(finalI +1);
-                listButton[finalI].setText("O");
-                checkWin();
+                }, () -> debutTour());
             });
         }
-
-        retour = new JButton();
-        retour.setText("retour au menu");
-        retour.setVisible(false);
-        retour.setForeground(Color.black);
-        retour.setBackground(Color.white);
-        panelWindow.add(retour);
-        retour.addActionListener(e -> {
-            fenetre.add(new SelectionJeu(fenetre));
-            fenetre.revalidate();
-        });
-
-        repaint();
-        revalidate();
+        add(panelPrincipal);
+        debutTour();
     }
 
-    private void displayComponent(String[] listStatement) {
-        setListButton();
-        //paramètres fenêtre
-        setMinimumSize(new Dimension(Constantes.TICTACTOE_LARGEUR * TAILLE_CASE, Constantes.TICTACTOE_HAUTEUR * TAILLE_CASE));
-        setMaximumSize(getMinimumSize());
-        setPreferredSize(getMinimumSize());
-        //paramètres panel
-        panelCase = new JPanel();
-        panelCase.setLayout(new GridLayout(3,3));
-        panelWindow = new JPanel();
-        panelWindow.setLayout(new GridLayout(3,1));
-        //paramètres labels
-        labelTitle = new JLabel("TicTacToe");
-        labelTitle.setAlignmentX(CENTER_ALIGNMENT);
-        panelWindow.add(labelTitle);
-        //paramètres boutons
-        for (int i=0; i<9; i++) {
-            listButton[i] = new JButton(listStatement[i]);
-            setButton(listButton[i]);
-            System.out.println(listStatement[i]);
-            listButton[i].setEnabled(!listStatement[i].equals(whosTurn));
-        }
-
-        panelWindow.add(panelCase);
-
-        add(panelWindow);
-    }
-
-    private void setButton(JButton btn) {
-        btn.setBackground(Color.white);
-        btn.setPreferredSize(new Dimension(70, 70));
-        panelCase.add(btn);
-    }
-
-    private void setListStatement(){
-        try {
-            listStatement = (String[]) recevoir.readObject();
-            whosTurn = "X";
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setListButton() {
-        listButton[0] = btn1;
-        listButton[1] = btn2;
-        listButton[2] = btn3;
-        listButton[3] = btn4;
-        listButton[4] = btn5;
-        listButton[5] = btn6;
-        listButton[6] = btn7;
-        listButton[7] = btn8;
-        listButton[8] = btn9;
-    }
-
-    private void checkWin() {
-        boolean victory = false;
-        if (listButton[0].getText().equals("O") && listButton[1].getText().equals("O") && listButton[2].getText().equals("O"))
-            victory = true;
-        else if (listButton[3].getText().equals("O") && listButton[4].getText().equals("O") && listButton[5].getText().equals("O"))
-            victory = true;
-        else if (listButton[6].getText().equals("O") && listButton[7].getText().equals("O") && listButton[8].getText().equals("O"))
-            victory = true;
-        else if (listButton[0].getText().equals("O") && listButton[3].getText().equals("O") && listButton[6].getText().equals("O"))
-            victory = true;
-        else if (listButton[1].getText().equals("O") && listButton[4].getText().equals("O") && listButton[7].getText().equals("O"))
-            victory = true;
-        else if (listButton[2].getText().equals("O") && listButton[5].getText().equals("O") && listButton[8].getText().equals("O"))
-            victory = true;
-        else if (listButton[0].getText().equals("O") && listButton[4].getText().equals("O") && listButton[8].getText().equals("O"))
-            victory = true;
-        else if (listButton[2].getText().equals("O") && listButton[4].getText().equals("O") && listButton[6].getText().equals("O"))
-            victory = true;
-
-        if (victory) {
-            for (JButton button: listButton) {
-                button.setEnabled(false);
-                labelTitle.setText("victory");
-                retour.setVisible(true);
+    void debutTour() {
+        Client.asynchrone(() -> {
+            try {
+                tourActuel = Client.socket.getInputStream().read() == 1;
+                for (int i = 0; i < 9; ++i)
+                    etatPlateau[i] = Client.socket.getInputStream().read();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
             }
-        }
+        }, () -> {
+            for (int i = 0; i < 9; ++i) {
+                if (tourActuel) {
+                    cases[i].setEnabled(etatPlateau[i] == Constantes.TICTACTOE_CASE_NON_COCHEE);
+                    cases[i].setText(etatPlateau[i] == Constantes.TICTACTOE_CASE_JOUEUR1 ? "X"
+                            : etatPlateau[i] == Constantes.TICTACTOE_CASE_JOUEUR2 ? "O" : "");
+                } else {
+                    cases[i].setEnabled(false);
+                    cases[i].setText(etatPlateau[i] == Constantes.TICTACTOE_CASE_JOUEUR1 ? "X"
+                            : etatPlateau[i] == Constantes.TICTACTOE_CASE_JOUEUR2 ? "O" : "");
+                }
+            }
+            if (!tourActuel)
+                debutTour();
+        });
     }
 }
