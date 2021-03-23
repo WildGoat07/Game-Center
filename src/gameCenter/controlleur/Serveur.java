@@ -36,7 +36,7 @@ public class Serveur {
                 }
                     break;
                 case Constantes.CHOIX_ALLUMETTES: {
-
+                    new ServeurAllumettes(client).demarrer();
                 }
                     break;
                 case Constantes.CHOIX_TICTACTOE: {

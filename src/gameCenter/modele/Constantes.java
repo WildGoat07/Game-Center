@@ -26,4 +26,10 @@ public final class Constantes {
     public static final int TICTACTOE_CASE_JOUEUR2 = -1;
     public static final int TICTACTOE_CASE_NON_COCHEE = 0;
 
+    public static final int ALLUMETTES_CHOIX_UTILISATEUR_RETOUR = 0;
+    public static final int ALLUMETTES_CHOIX_UTILISATEUR_RETIRER_UNE_ALLUMETTE_DU_PLATEAU_DE_JEU = 1;
+    public static final int ALLUMETTES_CHOIX_UTILISATEUR_RETIRER_DEUX_ALLUMETTES_DU_PLATEAU_DE_JEU = 2;
+    public static final int ALLUMETTES_ETAT_PARTIE_INDETERMINEE = 0;
+    public static final int ALLUMETTES_ETAT_PARTIE_ORDINATEUR_A_GAGNÉ = 1;
+    public static final int ALLUMETTES_ETAT_PARTIE_JOUEUR_A_GAGNÉ = 2;
 }
