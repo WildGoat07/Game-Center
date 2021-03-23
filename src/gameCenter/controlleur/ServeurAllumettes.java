@@ -36,21 +36,8 @@ public class ServeurAllumettes {
                     ++allumettes_retiree_par_le_joueur;
                     break;
                 }
-                if (allumettes_retiree_par_le_joueur % 2 == 1) {
-                    if (nbAllumettes % 3 == 0)
-                        nbAllumettes -= 2;
-                    else if (nbAllumettes % 3 == 1)
-                        nbAllumettes -= 1;
-                    else if (nbAllumettes % 3 == 2)
-                        nbAllumettes -= 1;
-                } else {
-                    if (nbAllumettes % 3 == 0)
-                        nbAllumettes -= 1;
-                    else if (nbAllumettes % 3 == 1)
-                        nbAllumettes -= 1;
-                    else if (nbAllumettes % 3 == 2)
-                        nbAllumettes -= 2;
-                }
+                nbAllumettes -= allumettes_retiree_par_le_joueur % 2 == 1 ? nbAllumettes % 3 == 0 ? 2 : 1
+                        : nbAllumettes % 3 == 2 ? 2 : 1;
                 if (nbAllumettes <= 0) {
                     client.getOutputStream()
                             .write(allumettes_retiree_par_le_joueur % 2 == 1
